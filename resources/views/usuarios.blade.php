@@ -245,7 +245,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Cancelar
+                                </button>
                                 <button class="btn btn-warning">Actualizar</button>
                             </div>
                         </form>
@@ -290,12 +292,41 @@
             <script src="{{ asset('js/foto.js') }}"></script>
             <script src="{{ asset('js/UserEdit.js') }}"></script>
             <!-- Detector de errores -->
-            <script>
-                @if ($errors->any())
+            @if ($errors->crear->any())
+                <script>
                     var modal = new bootstrap.Modal(document.getElementById('modalAgregarPersona'));
                     modal.show();
-                @endif
-            </script>
+                </script>
+            @endif
+
+            @if ($errors->editar->any())
+                <script>
+                    var modal = new bootstrap.Modal(document.getElementById('modalEditarUsuario'));
+                    modal.show();
+                </script>
+            @endif
+            @if (session('edit_id'))
+                <script>
+                    let id = "{{ session('edit_id') }}";
+
+                    let usuarios = @json($usuarios);
+
+                    let usuario = usuarios.data.find(u => u.id == id);
+
+                    if (usuario) {
+                        editarUsuario(
+                            usuario.id,
+                            usuario.nombre,
+                            usuario.a_paterno,
+                            usuario.a_materno,
+                            usuario.telefono,
+                            usuario.correo,
+                            usuario.tipo,
+                            usuario.foto
+                        );
+                    }
+                </script>
+            @endif
 
 </body>
 

@@ -133,7 +133,7 @@ Route::get('/', function () {
  */
 Route::get('/login', function () {
     if (session()->has('usuario')) {
-        return redirect()->route('control');
+        return redirect()->route('prestamos');
     }
     return view('login');
 })->name('login');
@@ -141,6 +141,9 @@ Route::get('/login', function () {
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::get('/logout', function () {
-    session()->forget('usuario');
+    session()->flush(); // borra toda la sesión
+    session()->invalidate(); // invalida la sesión
+    session()->regenerateToken(); // seguridad
+
     return redirect('/login');
 });

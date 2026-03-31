@@ -70,4 +70,3 @@ document
             form.submit();
         }
     });
-

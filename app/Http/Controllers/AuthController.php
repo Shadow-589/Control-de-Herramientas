@@ -28,6 +28,6 @@ class AuthController extends Controller
         // Guardar sesión
         Session::put('usuario', $usuario);
 
-        return redirect('/control'); // tu página principal
+        return redirect('/prestamos'); // tu página principal
     }
 }

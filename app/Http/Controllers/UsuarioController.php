@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 
 class UsuarioController extends Controller
@@ -18,7 +19,7 @@ class UsuarioController extends Controller
     //agregar
     public function store(Request $request)
     {
-        $request->validate([
+        $request->validateWithBag('crear', [
             'nombre' => 'required|string|max:255',
             'a_paterno' => 'required|string|max:255',
             'a_materno' => 'required|string|max:255',
@@ -55,9 +56,10 @@ class UsuarioController extends Controller
     //editar
     public function update(Request $request, $id)
     {
+        session()->flash('edit_id', $id);
         $usuario = Usuario::findOrFail($id);
 
-        $request->validate([
+        $request->validateWithBag('editar', [
             'nombre' => 'required|string|max:255',
             'a_paterno' => 'required|string|max:255',
             'a_materno' => 'required|string|max:255',
@@ -91,5 +93,18 @@ class UsuarioController extends Controller
         $usuario->save();
 
         return back()->with('success', 'Usuario actualizado correctamente');
+    }
+    public function destroy($id)
+    {
+        $usuario = Usuario::findOrFail($id);
+
+        // eliminar foto si existe
+        if ($usuario->foto && Storage::exists('public/' . $usuario->foto)) {
+            Storage::delete('public/' . $usuario->foto);
+        }
+
+        $usuario->delete();
+
+        return back()->with('success', 'Usuario eliminado correctamente');
     }
 }
