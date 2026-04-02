@@ -94,7 +94,7 @@
             <!-- INFO -->
             <div>
                 <p><strong>Nombre:</strong> {{ session('usuario')->nombre }}</p>
-                <p><strong>Correo:</strong> {{ session('usuario')->correo }}</p>
+                <p><strong>Usuario:</strong> {{ session('usuario')->correo }}</p>
                 <p><strong>Teléfono:</strong> {{ session('usuario')->telefono }}</p>
 
                 <a href="/logout" class="btn btn-danger mt-2">
