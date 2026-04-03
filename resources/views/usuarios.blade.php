@@ -161,6 +161,9 @@
                                         <label class="form-label">Foto</label>
                                         <input type="file" name="foto" id="inputFoto" class="form-control"
                                             accept="image/png, image/jpeg">
+                                        <small class="text-muted">
+                                            Peso maximo de la foto 2 Mb
+                                        </small>
                                         <!-- PREVISUALIZACIÓN -->
                                         <div class="mt-2 text-center">
                                             <img id="previewFoto" src="" alt="Vista previa"
